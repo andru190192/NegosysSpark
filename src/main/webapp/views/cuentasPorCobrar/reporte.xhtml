@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/templates/layout/masterLayout.xhtml">
+
+	<ui:define name="title">
+		REPORTES
+    </ui:define>
+
+	<ui:define name="content">
+		<p:growl id="mensaje" showDetail="true" showSummary="false"
+			life="7000" />
+
+		<p:panel id="panel" header="REPORTES">
+			<h:panelGrid columns="3">
+
+				<h:form>
+					<h:panelGrid columns="1">
+
+						<p:graphicImage value="../../resources/imagenes/r4.svg" />
+						<h:outputText value="PROVINCIA" />
+						<p:selectOneMenu id="comboProvincia"
+							value="#{cuentasPorCobrarReporteBean.provincia}" filter="true"
+							filterMatchMode="contains">
+							<f:selectItems value="#{cuentasPorCobrarReporteBean.provincias}"
+								var="provincia" itemValue="#{provincia}"
+								itemLabel="#{provincia.nombre}" />
+							<p:ajax event="change"
+								listener="#{cuentasPorCobrarReporteBean.cargarCiudades}"
+								update="comboCiudad" />
+						</p:selectOneMenu>
+
+						<h:outputText value="CIUDAD" />
+						<p:selectOneMenu id="comboCiudad"
+							value="#{cuentasPorCobrarReporteBean.ciudad}" filter="true"
+							filterMatchMode="contains">
+							<f:selectItems value="#{cuentasPorCobrarReporteBean.ciudades}"
+								var="ciudad" itemValue="#{ciudad.id}"
+								itemLabel="#{ciudad.nombre}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="VENDEDOR" />
+						<p:selectOneMenu value="#{cuentasPorCobrarReporteBean.vendedor}"
+							filter="true" filterMatchMode="contains">
+							<f:selectItem itemLabel="ESCOJA UN VENDEDOR" />
+							<f:selectItems value="#{cuentasPorCobrarReporteBean.vendedores}"
+								var="vendedor" itemValue="#{vendedor.id}"
+								itemLabel="#{vendedor.numeroDocumento} - #{vendedor.razonSocial}" />
+						</p:selectOneMenu>
+						<p:commandButton
+							actionListener="#{cuentasPorCobrarReporteBean.reporteCobranzaFactura}"
+							value="COBROS DE FACTURAS" ajax="false"
+							update="formCobranzaFactura" />
+					</h:panelGrid>
+				</h:form>
+
+				<h:form>
+
+					<h:panelGrid columns="1">
+
+						<p:graphicImage value="../../resources/imagenes/r4.svg" />
+						<h:outputText value="PROVINCIA" />
+						<p:selectOneMenu id="comboProvincia"
+							value="#{cuentasPorCobrarReporteBean.provincia}" filter="true"
+							filterMatchMode="contains">
+							<f:selectItems value="#{cuentasPorCobrarReporteBean.provincias}"
+								var="provincia" itemValue="#{provincia}"
+								itemLabel="#{provincia.nombre}" />
+							<p:ajax event="change"
+								listener="#{cuentasPorCobrarReporteBean.cargarCiudades}"
+								update="comboCiudad" />
+						</p:selectOneMenu>
+
+						<h:outputText value="CIUDAD" />
+						<p:selectOneMenu id="comboCiudad"
+							value="#{cuentasPorCobrarReporteBean.ciudad}" filter="true"
+							filterMatchMode="contains">
+							<f:selectItems value="#{cuentasPorCobrarReporteBean.ciudades}"
+								var="ciudad" itemValue="#{ciudad.id}"
+								itemLabel="#{ciudad.nombre}" />
+						</p:selectOneMenu>
+
+						<p:commandButton
+							actionListener="#{cuentasPorCobrarReporteBean.reporteCobranza}"
+							value="COBROS DE CREDITOS" ajax="false" styleClass="centrar"
+							update=":mensaje" />
+					</h:panelGrid>
+				</h:form>
+
+				<h:form>
+
+					<h:panelGrid columns="1">
+
+						<p:graphicImage value="../../resources/imagenes/r4.svg" />
+						<p:commandButton
+							actionListener="#{cuentasPorCobrarReporteBean.reporteCentralRiesgo}"
+							value="CENTRAL DE RIESGO" ajax="false" />
+
+					</h:panelGrid>
+
+				</h:form>
+
+			</h:panelGrid>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

@@ -1,0 +1,166 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Creación de Productos</h1>
+
+					<p:tabView id="tabViewProducto">
+
+						<p:tab id="tabProducto" title="PRODUCTOS">
+
+							<h:form id="formBusquedaProducto">
+
+								<h:panelGrid columns="2">
+									<p:inputText value="#{productoBean.criterioBusqueda}"
+										placeholder="EAN / NOMBRE" />
+									<p:commandButton icon="#{msg['iconoBuscar']}"
+										actionListener="#{productoBean.obtener}"
+										update="formBusquedaProducto,:tabViewProducto:tablaProductos, :mensajes" />
+								</h:panelGrid>
+
+							</h:form>
+
+							<p:dataTable id="tablaProductos" var="producto"
+								value="#{productoBean.productos}" paginator="true" reflow="true"
+								rows="10">
+
+								<f:facet name="header">
+									<h:form>
+										<p:commandButton value="#{msg['lbl.insertar']}"
+											action="#{productoBean.cargarInsertar}" />
+									</h:form>
+								</f:facet>
+
+								<p:column style="width:16px">
+									<p:rowToggler />
+								</p:column>
+
+								<p:column headerText="#{msg['lbl.gestionar']}">
+
+									<p:commandButton icon="ui-icon-pencil"
+										action="#{productoBean.cargarActualizar}">
+										<f:setPropertyActionListener value="#{producto}"
+											target="#{productoBean.producto}" />
+									</p:commandButton>
+
+								</p:column>
+
+								<p:column headerText="COD">
+		                            #{producto.id}
+        		                </p:column>
+
+								<p:column headerText="CÓDIGO">
+                           			#{producto.codigo}
+		                        </p:column>
+
+								<p:column headerText="NOMBRE">
+									#{producto.nombre}
+                		        </p:column>
+
+								<p:column headerText="GRUPO">  
+                        		    #{producto.grupo.nombre}  
+		                        </p:column>
+
+								<p:column headerText="TIPO">  
+        		                    #{producto.tipoProducto.nombre}  
+                		        </p:column>
+
+								<p:column headerText="C.MIN">  
+                        		    #{producto.cantidadMinima}  
+		                        </p:column>
+
+								<p:rowExpansion>
+									<p:panelGrid columns="3" layout="grid"
+										style="border:0px !important; background:none;"
+										class="FormContent">
+										<p:panelGrid columns="1"
+											style="border:0px !important; background:none;height:158px !important;"
+											class="FormContent">
+											<f:facet name="header">
+											IMPUESTOS
+										</f:facet>
+											<p:outputLabel
+												value="IVA-#{producto.iva.nombre}-(#{producto.iva.porcentaje})" />
+											<p:outputLabel
+												value="ICE-#{producto.ice.nombre}-(#{producto.ice.porcentaje})" />
+											<p:outputLabel
+												value="IRBPNR-#{producto.irbpnr.nombre}-(#{producto.irbpnr.porcentaje})" />
+										</p:panelGrid>
+										<p:panelGrid columns="1"
+											style="border:0px !important; background:none;"
+											class="FormContent">
+											<f:facet name="header">
+											PRECIOS
+										</f:facet>
+											<p:outputLabel value="COSTO-#{producto.precio1}" />
+											<p:outputLabel value="MAYORISTA-#{producto.precio2}" />
+											<p:outputLabel value="AFILIADO-#{producto.precio3}" />
+											<p:outputLabel value="NORMAL-#{producto.precio4}" />
+										</p:panelGrid>
+										<p:panelGrid columns="1"
+											style="border:0px !important; background:none;"
+											class="FormContent">
+											<f:facet name="header">
+											UNIDADES
+										</f:facet>
+											<p:outputLabel
+												value="#{producto.unidad1.nombre}-(#{producto.cantidadUnidad1})" />
+											<p:outputLabel
+												value="#{producto.unidad2.nombre}-(#{producto.cantidadUnidad2})" />
+											<p:outputLabel
+												value="#{producto.unidad3.nombre}-(#{producto.cantidadUnidad3})" />
+											<p:outputLabel
+												value="#{producto.unidad4.nombre}-(#{producto.cantidadUnidad4})" />
+										</p:panelGrid>
+									</p:panelGrid>
+								</p:rowExpansion>
+
+							</p:dataTable>
+
+						</p:tab>
+
+						<p:tab id="tabGrupo" title="GRUPOS">
+
+							<p:dataTable id="tablaGrupos" var="grupo"
+								value="#{grupoBean.grupos}" reflow="true">
+
+								<f:facet name="header">
+									<p:commandButton value="#{msg['lbl.insertar']}"
+										action="#{grupoBean.cargarInsertar}" />
+								</f:facet>
+
+								<p:column headerText="#{msg['lbl.gestionar']}">
+									<p:commandButton icon="#{msg['iconoEditar']}"
+										action="#{grupoBean.cargarActualizar}">
+										<f:setPropertyActionListener value="#{grupo}"
+											target="#{grupoBean.grupo}" />
+									</p:commandButton>
+								</p:column>
+
+								<p:column headerText="NOMBRE">  
+		                            #{grupo.nombre}  
+        		                </p:column>
+
+							</p:dataTable>
+
+						</p:tab>
+
+					</p:tabView>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

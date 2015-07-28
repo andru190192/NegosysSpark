@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Clientes</h1>
+
+					<h:form id="formBusqueda">
+
+						<h:panelGrid columns="2">
+
+							<p:inputText id="criterioBusqueda"
+								value="#{clienteBean.criterioBusqueda}"
+								placeholder="CÉDULA / RUC / RAZÓN SOCIAL" />
+							<p:commandButton icon="#{msg['iconoBuscar']}"
+								actionListener="#{clienteBean.obtener}"
+								update=":tablaClientes, :mensajes" />
+
+						</h:panelGrid>
+
+					</h:form>
+
+					<p:dataTable id="tablaClientes" var="cliente"
+						value="#{clienteBean.clientes}" reflow="true" rows="10"
+						paginator="true">
+
+						<f:facet name="header">
+							<p:commandButton value="#{msg['lbl.insertar']}"
+								action="#{clienteBean.cargarInsertar}" />
+						</f:facet>
+
+						<p:column headerText="#{msg['lbl.gestionar']}">
+
+							<p:commandButton icon="#{msg['iconoEditar']}"
+								action="#{clienteBean.cargarActualizar}">
+								<f:setPropertyActionListener value="#{cliente}"
+									target="#{clienteBean.cliente}" />
+							</p:commandButton>
+
+						</p:column>
+
+						<p:column headerText="COD">  
+    	                	#{cliente.id}
+	                    </p:column>
+
+						<p:column headerText="CÉDULA/RUC">  
+        	                #{cliente.numeroDocumento}
+						</p:column>
+
+						<p:column headerText="RAZÓN SOCIAL">  
+                    		#{cliente.razonSocial}
+                  	  	</p:column>
+
+						<p:column headerText="CIUDAD">  
+                    	    #{cliente.ciudad.provincia.nombre}-#{cliente.ciudad.nombre}  
+                	    </p:column>
+
+						<p:column headerText="DIRECCIÓN">  
+            	            #{cliente.direccion}  
+        	            </p:column>
+
+						<p:column headerText="EMAIL">  
+	                        #{cliente.email}  
+    	                </p:column>
+
+						<p:column headerText="TELÉFONOS">  
+                    	    #{cliente.telefono}  
+						</p:column>
+
+					</p:dataTable>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<h1 class="BigTopic TexAlCenter">Reportes Directorio</h1>
+
+			<div class="Container100 Responsive100">
+				<div class="ContainerIndent TexAlCenter">
+
+					<p:accordionPanel multiple="false">
+
+						<p:tab title="Clientes">
+							<h:form>
+								<p:panelGrid columns="1" layout="grid"
+									style="border:0px !important; background:none;"
+									class="FormContent">
+									<p:selectOneMenu id="comboProvincia"
+										value="#{directorioReporteBean.provincia}" filter="true"
+										filterMatchMode="contains"
+										style="min-width:200px; width:220px;">
+										<f:selectItem itemLabel="ESCOJA UNA PROVINCIA" />
+										<f:selectItems value="#{directorioReporteBean.provincias}"
+											var="provincia" itemValue="#{provincia}"
+											itemLabel="#{provincia.nombre}" />
+										<p:ajax event="change"
+											listener="#{directorioReporteBean.cargarCiudades}"
+											update="comboCiudad" />
+									</p:selectOneMenu>
+									<p:selectOneMenu id="comboCiudad"
+										value="#{directorioReporteBean.ciudad}" filter="true"
+										filterMatchMode="contains"
+										style="min-width:200px; width:220px;">
+										<f:selectItem itemLabel="ESCOJA UNA CIUDAD" />
+										<f:selectItems value="#{directorioReporteBean.ciudades}"
+											var="ciudad" itemValue="#{ciudad.id}"
+											itemLabel="#{ciudad.nombre}" />
+									</p:selectOneMenu>
+									<p:commandButton update=":mensaje"
+										actionListener="#{directorioReporteBean.reporteCliente}"
+										value="CLIENTES" ajax="false"
+										style="min-width:200px; width:220px;" />
+								</p:panelGrid>
+							</h:form>
+						</p:tab>
+
+						<p:tab title="Proveedores">
+							<h:form>
+								<p:commandButton value="PROVEEDORES" ajax="false"
+									actionListener="#{directorioReporteBean.reporteProveedor}"
+									update=":mensaje" style="min-width:200px; width:220px;" />
+							</h:form>
+						</p:tab>
+
+					</p:accordionPanel>
+
+				</div>
+			</div>
+
+		</div>
+
+	</ui:define>
+
+</ui:composition>

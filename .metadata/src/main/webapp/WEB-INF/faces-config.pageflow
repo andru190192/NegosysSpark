@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14235326240280" configfile="/negosys/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14299240526824" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14299240526825 pf14299240526826" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="empty-page.jsf" id="pf14299240526837" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14299240526825" path="/empty-page.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.jsf" id="pf14299240526838" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf14299240526826" path="/login.jsf"/>
+  <links id="pf14299240526825" target="pf14299240526837" source="pf14299240526824" outcome="correcto" redirect="true"/>
+  <links id="pf14299240526826" target="pf14299240526838" source="pf14299240526824" outcome="logout" redirect="true"/>
+</pageflow:Pageflow>

@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">CAMBIO DE CLAVE</h1>
+
+					<h:form id="form">
+
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none;"
+							class="FormContent">
+
+							<p:password id="contraseñaActual" placeholder="CLAVE ACTUAL" styleClass="TexAlCenter"
+								value="#{cambiarClaveBean.claveActual}"
+								style="width:90%;">
+							</p:password>
+
+							<p:password id="contraseñaNueva" styleClass="TexAlCenter"
+								value="#{cambiarClaveBean.claveNueva1}" placeholder="CLAVE NUEVA"
+								style="width:90%;">
+							</p:password>
+
+
+							<p:password id="repitaContraseña" styleClass="TexAlCenter"
+								placeholder="REPITA CLAVE NUEVA"
+								value="#{cambiarClaveBean.claveNueva2}"
+								style="width:90%;">
+							</p:password>
+
+							<p:commandButton value="ACTUALIZAR" update=":mensajes" id="ajax"
+								action="#{cambiarClaveBean.cambiarClave}" />
+
+						</p:panelGrid>
+
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

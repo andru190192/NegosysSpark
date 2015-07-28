@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Actualizar Grupo</h1>
+
+					<h:form id="formActualizar">
+
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none;"
+							class="FormContent">
+
+							<p:inputText value="#{grupoBean.grupo.nombre}" />
+
+							<p:commandButton value="#{msg['btn.guardar']}"
+								actionListener="#{grupoBean.actualizar}" />
+
+							<p:commandButton value="#{msg['btn.cancelar']}"
+								actionListener="#{grupoBean.regresar}" />
+
+						</p:panelGrid>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

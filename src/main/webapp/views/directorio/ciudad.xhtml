@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/layout/masterLayout.xhtml">
+
+	<ui:define name="title">
+		CIUDAD
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:growl id="mensaje" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<p:panel header="LISTADO DE PROVINCIAS">
+
+			<h:form id="formDataTable">
+
+				<p:dataTable id="tablaProvincias" var="provincia"
+					styleClass="estiloFilasPares" value="#{provinciaBean.provincias}"
+					emptyMessage="#{msg['lbl.mensajeTabla']}">
+
+					<p:column headerText="#{msg['lbl.gestionar']}">
+
+						<p:commandButton value="AGREGAR CIUDADES"
+							action="#{provinciaBean.cargarCiudades}"
+							oncomplete="PF('dialogoInsertarCiudades').show()"
+							update=":dialogoInsertarCiudades, :formActualizar">
+							<f:setPropertyActionListener value="#{provincia}"
+								target="#{provinciaBean.provincia}" />
+						</p:commandButton>
+
+					</p:column>
+
+					<p:column headerText="PROVINCIAS">  
+            			#{provincia.nombre}  
+        			</p:column>
+
+				</p:dataTable>
+
+			</h:form>
+
+			<p:dialog id="dialogoInsertarCiudades"
+				widgetVar="dialogoInsertarCiudades"
+				header="AGREGAR CIUDADES A PROVINCIA #{provinciaBean.provincia.nombre}"
+				resizable="false" modal="true" appendTo="@(body)">
+
+				<h:form id="formActualizar">
+
+					<h:panelGrid columns="1">
+						<h:panelGrid columns="3">
+
+							<h:outputText value="NOMBRE CIUDAD:" />
+							<p:inputText value="#{provinciaBean.ciudad.nombre}"
+								onblur="this.value=this.value.toUpperCase();" />
+
+							<p:commandButton value="INSERTAR"
+								actionListener="#{provinciaBean.insertar}"
+								update=":mensaje, formActualizar" />
+
+						</h:panelGrid>
+
+						<p:dataTable var="ciudad" value="#{provinciaBean.ciudades}"
+							emptyMessage="#{msg['lbl.mensajeTabla']}">
+
+							<p:column headerText="CIUDADES">  
+            					#{ciudad.nombre}  
+        					</p:column>
+
+						</p:dataTable>
+
+					</h:panelGrid>
+
+				</h:form>
+
+			</p:dialog>
+
+		</p:panel>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

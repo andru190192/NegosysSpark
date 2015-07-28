@@ -1,0 +1,236 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Insertar Producto</h1>
+
+					<h:form id="formInsertar">
+
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none;"
+							class="FormContent">
+
+							<p:inputText placeholder="NOMBRE"
+								value="#{productoBean.producto.nombre}" required="true"
+								requiredMessage="INGRESE UN NOMBRE PARA EL PRODUCTO"
+								styleClass="TexAlCenter Container96">
+								<p:clientValidator event="keyup" />
+							</p:inputText>
+
+							<p:selectOneMenu id="comboGrupo" filter="true" required="true" requiredMessage="ESCOJA UN GRUPO"
+								panelStyleClass="Container80 TexAlCenter"
+								styleClass="TexAlCenter comboGrupo" filterMatchMode="contains"
+								value="#{productoBean.producto.grupo.id}"
+								style="width:96%;float:left">
+								<f:selectItem itemLabel="ESCOJA UN GRUPO" />
+								<f:selectItems value="#{productoBean.grupos}" var="grupo"
+									itemValue="#{grupo.id}" itemLabel="#{grupo.nombre}" />
+							</p:selectOneMenu>
+
+							<p:inputText placeholder="CÓDIGO" id="txtEan" required="true" requiredMessage="INGRESE UN EAN"
+								value="#{productoBean.producto.codigo}"
+								styleClass="TexAlCenter Container96" />
+
+							<p:inputText placeholder="PRECIO NETO" id="precioNeto" required="true" requiredMessage="INGRESE EL PRECIO NETO"
+								value="#{productoBean.producto.precioNeto}"
+								styleClass="TexAlCenter Container96" />
+
+							<p:inputText placeholder="CANTIDAD MINIMA" required="true" requiredMessage="INGRESE LA CANTIDAD MINIMA"
+								value="#{productoBean.producto.cantidadMinima}"
+								styleClass="TexAlCenter Container96" />
+
+							<p:selectBooleanButton value="#{productoBean.producto.importado}"
+								onLabel="IMPORTADO" offLabel="NO IMPORTADO"
+								onIcon="ui-icon-check" offIcon="ui-icon-close"
+								styleClass="TexAlCenter" style="width:98%;float:left" />
+
+							<p:selectBooleanButton
+								value="#{productoBean.producto.facturacion}"
+								onLabel="INSERTAR A FACTURA" offLabel="NO INSERTAR A FACTURA"
+								onIcon="ui-icon-check" offIcon="ui-icon-close"
+								styleClass="TexAlCenter" style="width:98%;float:left" />
+
+							<p:selectBooleanButton value="#{productoBean.producto.kardex}"
+								onLabel="KARDEX" offLabel="NO KARDEX" onIcon="ui-icon-check"
+								offIcon="ui-icon-close" styleClass="TexAlCenter"
+								style="width:98%;float:left" />
+
+							<p:panelGrid columns="1" layout="grid">
+								<f:facet name="header" style="color: black !important;">
+									<span class="spanHeaderPanelGrid">IMPUESTOS</span>
+								</f:facet>
+
+								<p:selectOneMenu filter="true" required="true" requiredMessage="ESCOJA POR LO MENOS UN IVA"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.iva}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UN IVA" />
+									<f:selectItems value="#{productoBean.tarifasIva}" var="tarifa"
+										itemValue="#{tarifa}" itemLabel="#{tarifa.nombre}" />
+								</p:selectOneMenu>
+
+								<p:selectOneMenu filter="true"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.ice}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UN ICE" />
+									<f:selectItems value="#{productoBean.tarifasIce}" var="tarifa"
+										itemValue="#{tarifa}" itemLabel="#{tarifa.nombre}" />
+								</p:selectOneMenu>
+
+								<p:selectOneMenu filter="true"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.irbpnr}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UN IRBPNR" />
+									<f:selectItems value="#{productoBean.tarifasIrp}" var="tarifa"
+										itemValue="#{tarifa}" itemLabel="#{tarifa.nombre}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+							<div class="EmptyBox10"></div>
+
+							<p:panelGrid columns="3" layout="grid">
+								<f:facet name="header" style="color: black !important;">
+									<span class="spanHeaderPanelGrid">PRECIOS</span>
+								</f:facet>
+
+								<p:inputText placeholder="PRECIO - COSTO" required="true" requiredMessage="INGRESE EL PRECIO COSTO"
+									styleClass="Container90 TexAlCenter" />
+								<p:inputText placeholder="PRECIO - COSTO + IMPUESTOS" required="true" requiredMessage="INGRESE EL PRECIO COSTO + IMPUESTOS"
+									value="#{productoBean.producto.precio1}"
+									styleClass="Container90 TexAlCenter" />
+								<p:selectBooleanButton
+									value="#{productoBean.producto.importado}" onLabel="$ FIJO"
+									offLabel="% FIJO" onIcon="fa fa-dollar"
+									offIcon="fa fa-pie-chart" styleClass="TexAlCenter"
+									style="width:98%;float:leftpadding-top: 10px;" />
+
+								<p:inputText placeholder="PRECIO - MAYORISTA" required="true" requiredMessage="INGRESE EL PRECIO MAYORISTA + IMPUESTOS"
+									styleClass="Container90 TexAlCenter" />
+								<p:inputText placeholder="PRECIO - MAYORISTA + IMPUESTOS" required="true" requiredMessage="INGRESE EL PRECIO MAYORISTA + IMPUESTOS"	
+									value="#{productoBean.producto.precio2}"
+									styleClass="Container90 TexAlCenter" />
+								<p:selectBooleanButton
+									value="#{productoBean.producto.importado}" onLabel="$ FIJO"
+									offLabel="% FIJO" onIcon="fa fa-dollar"
+									offIcon="fa fa-pie-chart" styleClass="TexAlCenter"
+									style="width:98%;float:leftpadding-top: 10px;" />
+
+								<p:inputText placeholder="PRECIO - AFILIADO"
+									styleClass="Container90 TexAlCenter" />
+								<p:inputText placeholder="PRECIO - AFILIADO + IMPUESTOS"
+									value="#{productoBean.producto.precio3}"
+									styleClass="Container90 TexAlCenter" />
+								<p:selectBooleanButton
+									value="#{productoBean.producto.importado}" onLabel="$ FIJO"
+									offLabel="% FIJO" onIcon="fa fa-dollar"
+									offIcon="fa fa-pie-chart" styleClass="TexAlCenter"
+									style="width:98%;float:leftpadding-top: 10px;" />
+
+								<p:inputText placeholder="PRECIO - NORMAL"
+									styleClass="Container90 TexAlCenter" />
+								<p:inputText placeholder="PRECIO - NORMAL + IMPUESTOS"
+									value="#{productoBean.producto.precio4}"
+									styleClass="Container90 TexAlCenter" />
+								<p:selectBooleanButton
+									value="#{productoBean.producto.importado}" onLabel="$ FIJO"
+									offLabel="% FIJO" onIcon="fa fa-dollar"
+									offIcon="fa fa-pie-chart" styleClass="TexAlCenter"
+									style="width:98%;float:leftpadding-top: 10px;" />
+
+							</p:panelGrid>
+
+							<div class="EmptyBox10"></div>
+
+							<p:panelGrid columns="2" layout="grid">
+								<f:facet name="header" style="color: black !important;">
+									<span class="spanHeaderPanelGrid">UNIDADES</span>
+								</f:facet>
+								<p:selectOneMenu filter="true"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.unidad1}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UNA UNIDAD" />
+									<f:selectItems value="#{productoBean.unidades}" var="unidad"
+										itemValue="#{unidad}" itemLabel="#{unidad.nombre}" />
+								</p:selectOneMenu>
+								<p:inputText placeholder="CANTIDAD"
+									value="#{productoBean.producto.cantidadUnidad1}"
+									styleClass="Container96 TexAlCenter" />
+									
+								<p:selectOneMenu filter="true"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.unidad2}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UNA UNIDAD" />
+									<f:selectItems value="#{productoBean.unidades}" var="unidad"
+										itemValue="#{unidad}" itemLabel="#{unidad.nombre}" />
+								</p:selectOneMenu>
+								<p:inputText placeholder="CANTIDAD"
+									value="#{productoBean.producto.cantidadUnidad2}"
+									styleClass="Container96 TexAlCenter" />
+									
+								<p:selectOneMenu filter="true"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.unidad3}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UNA UNIDAD" />
+									<f:selectItems value="#{productoBean.unidades}" var="unidad"
+										itemValue="#{unidad}" itemLabel="#{unidad.nombre}" />
+								</p:selectOneMenu>
+								<p:inputText placeholder="CANTIDAD"
+									value="#{productoBean.producto.cantidadUnidad3}"
+									styleClass="Container96 TexAlCenter" />
+									
+								<p:selectOneMenu filter="true"
+									panelStyleClass="Container80 TexAlCenter"
+									styleClass="TexAlCenter" filterMatchMode="contains"
+									value="#{productoBean.producto.unidad4}"
+									style="width:96%;float:left">
+									<f:selectItem itemLabel="ESCOJA UNA UNIDAD" />
+									<f:selectItems value="#{productoBean.unidades}" var="unidad"
+										itemValue="#{unidad}" itemLabel="#{unidad.nombre}" />
+								</p:selectOneMenu>
+								<p:inputText placeholder="CANTIDAD"
+									value="#{productoBean.producto.cantidadUnidad4}"
+									styleClass="Container96 TexAlCenter" />
+
+							</p:panelGrid>
+
+							<div class="EmptyBox10"></div>
+
+							<p:commandButton value="#{msg['btn.guardar']}"
+								actionListener="#{productoBean.insertar}" update="mensajes"
+								style="min-width:200px; width:220px;" />
+
+							<p:commandButton value="#{msg['btn.cancelar']}"
+								actionListener="#{productoBean.regresar}" process="@this"
+								style="min-width:200px; width:220px;" />
+
+						</p:panelGrid>
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ps="http://primefaces.org/spark"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ps:menu>
+
+		<p:submenu label="Directorio" icon="fa fa-newspaper-o">
+			<p:menuitem value="Clientes" icon="fa fa-list-alt"
+				url="/views/directorio/cliente.xhtml" />
+			<p:menuitem value="Proveedores" icon="fa fa-list-alt"
+				url="/views/directorio/proveedor.xhtml" />
+			<p:menuitem value="Reportes" icon="fa fa-list-alt"
+				url="/views/directorio/reporte.xhtml" />
+		</p:submenu>
+
+		<p:separator />
+
+		<p:submenu label="Inventario" icon="fa fa-newspaper-o">
+			<p:menuitem value="Productos" icon="fa fa-list-alt"
+				url="/views/inventario/producto.xhtml" />
+			<p:menuitem value="Compras" icon="fa fa-list-alt" url="/views/inventario/ingreso.xhtml" />
+			<p:menuitem value="Retenciones" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Kardex" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Bajas" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Transferencias" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Reportes" icon="fa fa-list-alt" url="#" />
+		</p:submenu>
+
+		<p:separator />
+
+		<p:submenu label="Facturación" icon="fa fa-newspaper-o">
+			<p:menuitem value="Facturas" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Facturas Caja" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Cotizaciones" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Notas/Credito" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Guias/Remisión" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Reportes" icon="fa fa-list-alt" url="#" />
+		</p:submenu>
+
+		<p:separator />
+
+		<p:submenu label="Ctas x Pagar" icon="fa fa-newspaper-o">
+			<p:menuitem value="Gastos" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Reportes" icon="fa fa-list-alt" url="#" />
+		</p:submenu>
+
+		<p:separator />
+
+		<p:submenu label="Ctas x Cobrar" icon="fa fa-newspaper-o">
+			<p:menuitem value="Cobros" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Créditos" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Reportes" icon="fa fa-list-alt" url="#" />
+		</p:submenu>
+
+		<p:separator />
+
+		<p:submenu label="Doc. Electrónicos" icon="fa fa-newspaper-o">
+			<p:menuitem value="Firmar" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Autorizar" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Subir" icon="fa fa-list-alt" url="#" />
+			<p:menuitem value="Reenviar" icon="fa fa-list-alt" url="#" />
+		</p:submenu>
+
+	</ps:menu>
+
+</ui:composition>

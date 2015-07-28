@@ -1,0 +1,35 @@
+CACHE MANIFEST
+# v1 2015-04-30
+
+http://localhost/negosys/javax.faces.resource/theme.css.jsf?ln=primefaces-spark
+http://localhost/negosys/javax.faces.resource/fa/font-awesome.css.jsf?ln=primefaces&v=5.2
+http://localhost/negosys/javax.faces.resource/primefaces.css.jsf?ln=primefaces&v=5.2
+http://localhost/negosys/javax.faces.resource/jquery/jquery.js.jsf?ln=primefaces&v=5.2
+http://localhost/negosys/javax.faces.resource/primefaces.js.jsf?ln=primefaces&v=5.2
+http://localhost/negosys/javax.faces.resource/jquery/jquery-plugins.js.jsf?ln=primefaces&v=5.2
+http://localhost/negosys/javax.faces.resource/css/core-layout.css.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/css/font-awesome.css.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/css/animate.css.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/css/spark-layout.css.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/css/core.css.jsf?ln=local
+http://localhost/negosys/javax.faces.resource/js/layout.js.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/images/LOGO.svg.jsf?ln=local
+http://localhost/negosys/javax.faces.resource/images/background.png.jsf?ln=spark-layout 
+
+http://localhost/negosys/resources/spark-layout/images/loginpageillust.svg
+
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-Medium-webfont.woff2.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff2.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-Medium-webfont.woff.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-Medium-webfont.ttf.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-SemiBold-webfont.ttf.jsf?ln=spark-layout
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-Medium-webfont.woff2.jsf?ln=primefaces-spark
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff2.jsf?ln=primefaces-spark
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-Medium-webfont.woff.jsf?ln=primefaces-spark
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-SemiBold-webfont.woff.jsf?ln=primefaces-spark
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-Medium-webfont.ttf.jsf?ln=primefaces-spark
+http://localhost/negosys/javax.faces.resource/fonts/Raleway-SemiBold-webfont.ttf.jsf?ln=primefaces-spark
+
+NETWORK:
+login.jsf

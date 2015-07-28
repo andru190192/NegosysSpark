@@ -1,0 +1,115 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Insertar Producto</h1>
+
+
+					<p:panelGrid columns="1">
+
+						<p:panelGrid columns="2">
+
+							<h:form>
+								<p:inputText id="txtCriterioBusqueda" placeholder="EAN/NOMBRE"
+									value="#{ingresoBean.criterioBusquedaProducto}" />
+
+								<p:commandButton id="btnBusqueda" icon="ui-icon-search"
+									actionListener="#{ingresoBean.busquedaProductos}"
+									update="tablaBusquedaProductos, mensajes" process="@form" />
+							</h:form>
+
+						</p:panelGrid>
+
+						<p:dataTable id="tablaBusquedaProductos" var="producto"
+							reflow="true" paginator="true" rows="5"
+							value="#{ingresoBean.productos}" selectionMode="single"
+							selection="#{ingresoBean.producto}" rowKey="#{producto.id}">
+
+							<p:ajax event="rowSelect"
+								listener="#{ingresoBean.escojerProducto}"
+								update="insertarProductoForm" />
+
+							<p:column headerText="CÓDIGO">
+								#{producto.codigo}
+							</p:column>
+
+							<p:column headerText="NOMBRE">
+								#{producto.nombre}
+							</p:column>
+
+						</p:dataTable>
+
+						<h:form id="insertarProductoForm">
+
+							<p:panelGrid>
+
+								<f:facet name="header">
+									Detalles de Producto
+								</f:facet>
+
+								<p:inputText
+									value="#{ingresoBean.detalleIngreso.producto.id} - #{ingresoBean.detalleIngreso.producto.codigo}"
+									required="true" requiredMessage="ESCOJA UN PRODUCTO"
+									readonly="true" styleClass="TexAlCenter Container96" />
+
+								<p:inputText
+									value="#{ingresoBean.detalleIngreso.producto.nombre}"
+									readonly="true" styleClass="TexAlCenter Container96" />
+
+								<p:selectOneMenu 
+									value="#{ingresoBean.detalleIngreso.local.id}" required="true"
+									requiredMessage="ESCOJA UN LOCAL" styleClass="TexAlCenter Container96"
+									panelStyleClass="TexAlCenter" style="width:96%;float:left;"
+									panelStyle="width:79% !important;">
+
+									<f:selectItem itemLabel="ESCOJA UN LOCAL" />
+									<f:selectItems value="#{ingresoBean.locales}" var="local"
+										itemValue="#{local.id}" itemLabel="#{local.nombre}" />
+								</p:selectOneMenu>
+
+								<p:inputText value="#{ingresoBean.detalleIngreso.cantidad}"
+									placeholder="CANTIDAD" styleClass="TexAlCenter Container96">
+									<f:validateDoubleRange minimum="1" />
+								</p:inputText>
+
+								<p:inputText
+									value="#{ingresoBean.detalleIngreso.producto.precioNeto}"
+									readonly="true" styleClass="TexAlCenter Container96" />
+
+								<p:inputText value="#{ingresoBean.detalleIngreso.precio}"
+									placeholder="PRECIO COSTO" styleClass="TexAlCenter Container96">
+									<f:validateDoubleRange minimum="5.5" maximum="8.5" />
+								</p:inputText>
+
+								<p:commandButton value="#{msg['btn.insertar']}"
+									actionListener="#{ingresoBean.insertarDetalleIngreso}"
+									update="insertarProductoForm, mensajes"
+									style="min-width:200px; width:220px;" />
+
+								<p:commandButton value="#{msg['btn.regresar']}"
+									actionListener="#{ingresoBean.irIngreso}" process="@this"
+									style="min-width:200px; width:220px;" />
+
+							</p:panelGrid>
+
+						</h:form>
+
+					</p:panelGrid>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

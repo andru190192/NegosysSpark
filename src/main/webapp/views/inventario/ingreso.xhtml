@@ -1,0 +1,118 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Ingreso de Inventario</h1>
+
+					<h:form id="formCabecera">
+
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none;"
+							class="FormContent">
+
+							<p:selectOneMenu id="ciudad"
+								value="#{ingresoBean.ingreso.proveedor}" required="true"
+								requiredMessage="ESCOJA UN PROVEEDOR"
+								styleClass="TexAlCenter Container96"
+								panelStyleClass="TexAlCenter" style="width:96%;float:left;"
+								panelStyle="width:79% !important;">
+								<f:selectItem itemLabel="ESCOJA UN PROVEEDOR" />
+								<f:selectItems value="#{ingresoBean.proveedores}"
+									var="proveedor" itemValue="#{proveedor.id}"
+									itemLabel="#{proveedor.razonSocial}" />
+							</p:selectOneMenu>
+
+							<p:inputText value="#{ingresoBean.ingreso.codigoDocumento}"
+								placeholder="# FACTURA" styleClass="TexAlCenter Container96" />
+
+							<p:inputText value="#{ingresoBean.ingreso.fechaEmisionDocumento}"
+								placeholder="FEC. EMI. FACTURA"
+								styleClass="TexAlCenter Container96" />
+
+							<p:inputText value="#{ingresoBean.ingreso.total}"
+								placeholder="TOTAL FACTURA" styleClass="TexAlCenter Container96" />
+
+							<p:selectBooleanButton value="#{ingresoBean.ingreso.pagado}"
+								onLabel="PAGADO" offLabel="NO PAGADO" onIcon="ui-icon-check"
+								offIcon="ui-icon-close" styleClass="TexAlCenter Container96"
+								style="width: 96%;" />
+						</p:panelGrid>
+
+						<p:dataTable id="tablaDetalleIngresos" var="detalleIngreso"
+							value="#{ingresoBean.ingreso.detallesIngresos}" reflow="true">
+
+							<f:facet name="header">
+								<p:commandButton value="INGRESAR PRODUCTOS"
+									actionListener="#{ingresoBean.irIngresoInsertar}"
+									process="@this" />
+							</f:facet>
+
+							<p:column headerText="#{msg['lbl.gestionar']}">
+
+								<p:commandButton icon="#{msg['iconoEditar']}"
+									action="#{clienteBean.cargarActualizar}">
+									<f:setPropertyActionListener value="#{detalleIngreso}"
+										target="#{clienteBean.cliente}" />
+								</p:commandButton>
+
+								<p:commandButton icon="#{msg['iconoEliminar']}"
+									action="#{clienteBean.cargarActualizar}">
+									<f:setPropertyActionListener value="#{detalleIngreso}"
+										target="#{clienteBean.cliente}" />
+								</p:commandButton>
+
+							</p:column>
+
+							<p:column headerText="COD - EAN">
+								#{detalleIngreso.producto.id} - #{detalleIngreso.producto.codigo}
+							</p:column>
+
+							<p:column headerText="PRODUCTO">
+								#{detalleIngreso.producto.nombre}
+							</p:column>
+
+							<p:column headerText="LOCAL">
+								#{detalleIngreso.local.nombre}
+							</p:column>
+
+							<p:column headerText="CANTIDAD">
+								#{detalleIngreso.cantidad}
+							</p:column>
+
+							<p:column headerText="PRECIO COSTO ACTUAL">
+								#{detalleIngreso.producto.precioNeto}
+							</p:column>
+
+							<p:column headerText="PRECIO COSTO NUEVO">
+								#{detalleIngreso.precio}
+							</p:column>
+
+						</p:dataTable>
+
+						<p:commandButton value="GUARDAR"
+							actionListener="#{ingresoBean.insertar}"
+							update=":formCabecera, :mensajes" />
+
+						<p:commandButton value="NUEVO"
+							actionListener="#{ingresoBean.limpiarIngreso}"
+							update=":formCabecera" process="@this" />
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

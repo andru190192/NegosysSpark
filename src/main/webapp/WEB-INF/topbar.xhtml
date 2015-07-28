@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<div id="layout-topbar" class="ShadowGray">
+		<div id="layout-topbar-indent">
+			<h:form>
+				<a href="/negosys/views/home.jsf"> <h:graphicImage
+						name="images/LOGO.svg" styleClass="Fleft" id="logo" class="Fleft" />
+				</a>
+			</h:form>
+			<a href="#" id="mobile-menu-button"
+				class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i>
+				Menu</a> <a href="#" id="mobile-menu-button-gray"
+				class="BordRad3 white ShowOnMobile"><i class="fa fa-caret-down"></i>
+				Personal</a>
+
+			<ul id="layout-topbar-menu">
+				<li><a href="/negosys/login.jsf" class="Animated05"><i
+						class="fa fa-sign-out"></i> Salir</a></li>
+
+				<li class="fa fa-ellipsis-v menu-separator"></li>
+
+				<li><a class="Animated05 CursPointer"><i class="fa fa-user"></i>
+						#{inicioBean.nombreUsuario} <i
+						class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
+					<ul style="width: 175px; margin-left: -10px;"
+						class="Animated03 submenu">
+						<li><a href="/negosys/cambiarClave.jsf" class="Animated05"><i
+								class="fa fa-key"></i> Cambiar Clave</a></li>
+					</ul></li>
+			</ul>
+		</div>
+	</div>
+
+</ui:composition>

@@ -1,0 +1,87 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Actualizar Proveedor</h1>
+
+					<h:form id="formActualizar">
+
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none;"
+							class="FormContent">
+
+							<p:inputText id="numeroDocumento" styleClass="TexAlCenter Container96"
+								value="#{proveedorBean.proveedor.numeroDocumento}"
+								readonly="true" placeholder="RUC"
+								 />
+
+							<p:inputText id="razonSocial" styleClass="TexAlCenter Container96"
+								value="#{proveedorBean.proveedor.razonSocial}"
+								placeholder="RAZÓN SOCIAL"
+								validatorMessage="LA RAZÓN SOCIAL ES OBLIGATORIA (3 A 50 LETRAS)"
+								>
+								<f:validateRegex pattern="[A-Za-z ñÑ]{3,50}" />
+							</p:inputText>
+
+							<p:inputTextarea id="telefono" styleClass="TexAlCenter Container96"
+								value="#{proveedorBean.proveedor.telefono}"
+								placeholder="TELÉFONOS"  />
+
+							<p:inputText id="email" value="#{proveedorBean.proveedor.email}" styleClass="TexAlCenter Container96"
+								placeholder="EMAIL"  /> 
+
+							<p:selectOneMenu id="provincia" panelStyleClass="TexAlCenter" panelStyle="width:79% !important;" styleClass="TexAlCenter" style="width:96%;float:left"
+								value="#{proveedorBean.proveedor.ciudad.provincia}"
+								>
+								<f:selectItems value="#{proveedorBean.provincias}"
+									var="provincia" itemValue="#{provincia}"
+									itemLabel="#{provincia.nombre}" />
+								<p:ajax event="change"
+									listener="#{proveedorBean.cargarCiudades}" update="ciudad" />
+							</p:selectOneMenu>
+
+							<p:selectOneMenu id="ciudad" panelStyleClass="TexAlCenter" panelStyle="width:79% !important;"  styleClass="TexAlCenter" style="width:96%;float:left"
+								value="#{proveedorBean.proveedor.ciudad.id}" required="true"
+								requiredMessage="ESCOJA UNA CIUDAD"
+								>
+								<f:selectItems value="#{proveedorBean.ciudades}" var="ciudad"
+									itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}" />
+							</p:selectOneMenu>
+
+							<p:inputText id="direccion"  styleClass="TexAlCenter Container96"
+								value="#{proveedorBean.proveedor.direccion}"
+								placeholder="DIRECCIÓN"
+								validatorMessage="LA DIRECCION ES OBLIGATORIA (5 A 100 LETRAS)"
+								>
+								<f:validateRegex pattern="[A-Za-záéíóúñÑ0-9.,/\\- ]{5,500}" />
+							</p:inputText>
+
+							<p:commandButton value="#{msg['btn.guardar']}"
+								actionListener="#{proveedorBean.actualizar}" update="mensajes"
+								style="min-width:200px; width:220px;" />
+
+							<p:commandButton value="#{msg['btn.cancelar']}"
+								actionListener="#{proveedorBean.regresar}" process="@this"
+								style="min-width:200px; width:220px;" />
+
+						</p:panelGrid>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>

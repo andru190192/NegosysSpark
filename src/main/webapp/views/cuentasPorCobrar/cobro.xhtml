@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/templates/layout/masterLayout.xhtml">
+
+	<ui:define name="title">
+		COBRANZA
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:growl id="mensaje" showDetail="true" showSummary="false"
+			life="7000" />
+
+		<p:panel id="panel" header="COBRANZA DE FACTURAS">
+
+			<h:form id="formBusqueda">
+
+				<h:panelGrid columns="3" cellpadding="10" cellspacing="10">
+
+					<p:outputLabel value="CÉDULA O # FACTURA:" />
+					<p:inputText value="#{cobroBean.criterioBusqueda}" />
+					<p:commandButton
+						update="formBusqueda, :formDataTable:tablaFacturasPendientes, :mensaje"
+						icon="#{msg['iconoBuscar']}"
+						actionListener="#{cobroBean.obtenerFacturasPendientes}" />
+
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:panel>
+
+
+		<h:form id="formDataTable">
+
+			<p:dataTable id="tablaFacturasPendientes" var="factura"
+				emptyMessage="#{msg['lbl.mensajeTabla']}"
+				value="#{cobroBean.listaFacturasPendientes}"
+				selectionMode="multiple"
+				selection="#{cobroBean.listaFacturasSeleccionados}"
+				rowKey="#{factura.id}">
+
+				<p:ajax event="rowSelect" listener="#{cobroBean.onRowSelect}"
+					update=":formDataTable:tablaFacturasPendientes, :mensaje" />
+
+				<p:ajax event="rowUnselect" listener="#{cobroBean.onRowUnselect}"
+					update=":formDataTable:tablaFacturasPendientes" />
+
+				<p:column headerText="■" styleClass="centrar">
+					<p:selectBooleanCheckbox disabled="true"
+						value="#{factura.escogido}" />
+				</p:column>
+
+				<p:column headerText="ORDEN" styleClass="centrar">
+				 	#{factura.orden eq 0 ? "" : factura.orden}
+				</p:column>
+
+				<p:column headerText="# FACTURA" styleClass="centrar">
+				 	#{factura.codigoDocumento}
+				</p:column>
+
+				<p:column headerText="FECHA EMISION" styleClass="centrar">
+					<p:outputLabel value="#{factura.fechaEmision}">
+						<f:convertDateTime pattern="dd/MM/yyyy"
+							timeZone="America/Guayaquil" />
+					</p:outputLabel>
+				</p:column>
+
+				<p:column headerText="CLIENTE" styleClass="centrar">
+				 	#{factura.nombre}
+				</p:column>
+
+				<p:column headerText="TOTAL" styleClass="centrar">
+					#{factura.total}
+				</p:column>
+
+				<p:column headerText="ABONOS" styleClass="centrar">
+					#{factura.abono}
+				</p:column>
+
+				<p:column headerText="SALDO" styleClass="centrar">
+					#{factura.saldo}
+				</p:column>
+
+				<p:columnGroup type="footer">
+
+					<p:row>
+
+						<p:column colspan="5" footerText="TOTALES: "
+							styleClass="centrarDerecha" />
+						<p:column footerText="$ #{cobroBean.totalTotal}" />
+						<p:column footerText="$ #{cobroBean.totalAbonos}" />
+						<p:column footerText="$ #{cobroBean.totalSaldo}" />
+
+					</p:row>
+
+				</p:columnGroup>
+
+				<f:facet name="footer">
+
+					<p:commandButton process="tablaFacturasPendientes" value="ABONAR"
+						oncomplete="comprobarFacturasSeleccionadosAbono(xhr, status, args)"
+						update=":formPagarCredito, :mensaje" />
+					<p:tooltip for="btnPagarTodo" value="PAGO RAPIDO" />
+
+					<p:commandButton id="btnPagarTodo" update=":mensaje"
+						value="PAGO RAPIDO"
+						actionListener="#{cobroBean.comprobarFacturasSeleccionados}"
+						oncomplete="comprobarFacturasSeleccionadosLote(xhr, status, args)">
+					</p:commandButton>
+
+				</f:facet>
+
+			</p:dataTable>
+		</h:form>
+
+		<p:dialog header="COBRO DEUDAS" widgetVar="dialogoPagarCredito"
+			resizable="false" modal="false" showEffect="clip" hideEffect="fold"
+			id="dialogoPagarCredito" width="50%">
+
+			<h:form id="formPagarCredito">
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:outputLabel value="MONTO" />
+					<p:inputText value="#{cobroBean.entrada.cuota}" />
+					<p:outputLabel value="FECHA PAGO" />
+					<p:calendar value="#{cobroBean.fechapago}" navigator="true" />
+					<p:commandButton value="AGREGAR PAGO"
+						actionListener="#{cobroBean.insertarPagoEntrada}"
+						update="formPagarCredito, :mensaje" />
+				</h:panelGrid>
+			</h:form>
+
+			<p:commandButton value="GUARDAR" icon="ui-icon-disk"
+				update=":formBusqueda, :formDataTable:tablaFacturasPendientes, :mensaje"
+				actionListener="#{cobroBean.insertarCobro}"
+				oncomplete="comprobarDialogoPago(xhr, status, args)" />
+
+			<p:commandButton value="CANCELAR" icon="ui-icon-close"
+				update="formPagarCredito"
+				oncomplete="PF('dialogoPagarCredito').hide()" process="@this"
+				actionListener="#{cobroBean.limpiar}" />
+		</p:dialog>
+
+		<p:dialog header="PAGO TOTAL EN EFECTIVO"
+			widgetVar="dialogoClientePagoTotal" resizable="false" modal="false"
+			showEffect="clip" hideEffect="fold" width="340px">
+
+			<h:form id="formPagoRapido">
+
+				<h:panelGrid rowClasses="1,fila" columns="1" width="100%">
+					<p:outputLabel styleClass="negrita m-b10px"
+						value="¿DESEA PAGAR TODAS LAS FACTURAS EN EFECTIVO?" />
+					<p:calendar styleClass="calendarioCobro" navigator="true"
+						value="#{cobroBean.fechaPagoRapido}" showOn="button" />
+					<f:facet name="footer">
+						<p:commandButton value="PAGAR"
+							update=":formDataTable:tablaFacturasPendientes"
+							oncomplete="PF('dialogoClientePagoTotal').hide()"
+							actionListener="#{cobroBean.pagoLote}" icon="ui-icon-disk" />
+						<p:commandButton value="CANCELAR"
+							oncomplete="PF('dialogoClientePagoTotal').hide()"
+							icon="ui-icon-close" />
+					</f:facet>
+
+				</h:panelGrid>
+
+			</h:form>
+
+		</p:dialog>
+
+		<script type="text/javascript">
+			//<![CDATA[
+			function comprobarDialogoPago(xhr, status, args) {
+				if (!args.error) {
+					PF('dialogoPagarCredito').hide()
+				}
+			}
+			function comprobarFacturasSeleccionadosAbono(xhr, status, args) {
+				if (!args.error1) {
+					PF('dialogoPagarCredito').show()
+				}
+			}
+			function comprobarFacturasSeleccionadosLote(xhr, status, args) {
+				if (!args.error1) {
+					PF('dialogoClientePagoTotal').show()
+				}
+			}
+			//]]>
+		</script>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

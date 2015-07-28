@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="content">
+
+		<p:growl id="mensajes" showDetail="true" life="7000"
+			showSummary="false" />
+
+		<div class="layout-portlets-box">
+			<div class="Container100">
+				<div class="ContainerIndent TexAlCenter">
+					<h1 class="BigTopic TexAlCenter">Insertar Cliente</h1>
+
+					<h:form id="formInsertar">
+
+						<p:panelGrid columns="1" layout="grid"
+							style="border:0px !important; background:none;"
+							class="FormContent">
+
+							<p:inputText id="numeroDocumento" placeholder="CÉDULA/RUC"
+								value="#{clienteBean.cliente.numeroDocumento}" styleClass="TexAlCenter"
+								style="width:90%;">
+								<p:ajax event="change"
+									listener="#{clienteBean.comprobarCliente}"
+									update="formInsertar, :mensajes" />
+							</p:inputText>
+
+							<p:inputText id="razonSocial" placeholder="RAZÓN SOCIAL" styleClass="TexAlCenter"
+								value="#{clienteBean.cliente.razonSocial}"
+								validatorMessage="LA RAZÓN SOCIAL ES OBLIGATORIA (3 A 50 LETRAS)"
+								style="width:90%;">
+								<f:validateRegex pattern="[A-Za-z ñÑ]{3,50}" />
+							</p:inputText>
+
+							<p:inputTextarea id="telefono" placeholder="TELÉFONOS" 
+								value="#{clienteBean.cliente.telefono}" styleClass="TexAlCenter"
+								style="width:90%;" />
+
+							<p:inputText id="email" placeholder="EMAIL" styleClass="TexAlCenter"
+								value="#{clienteBean.cliente.email}"
+								style="width:90%;" />
+
+							<p:selectOneMenu id="provincia" panelStyleClass="Container80 TexAlCenter" styleClass="TexAlCenter"
+								value="#{clienteBean.cliente.ciudad.provincia}"
+								style="width:90%;">
+								<f:selectItem itemLabel="ESCOJA UNA PROVINCIA" />
+								<f:selectItems value="#{clienteBean.provincias}" var="provincia"
+									itemValue="#{provincia}" itemLabel="#{provincia.nombre}" />
+								<p:ajax event="change" listener="#{clienteBean.cargarCiudades}"
+									update="ciudad" />
+							</p:selectOneMenu>
+ 
+							<p:selectOneMenu id="ciudad" styleClass="TexAlCenter" panelStyleClass="Container80"
+								value="#{clienteBean.cliente.ciudad.id}" required="true"
+								requiredMessage="ESCOJA UNA CIUDAD"
+								style="width:90%;">
+								<f:selectItem itemLabel="ESCOJA UNA CIUDAD" />
+								<f:selectItems value="#{clienteBean.ciudades}" var="ciudad"
+									itemValue="#{ciudad.id}" itemLabel="#{ciudad.nombre}" />
+							</p:selectOneMenu>
+
+							<p:inputText id="direccion" placeholder="DIRECCIÓN" styleClass="TexAlCenter"
+								value="#{clienteBean.cliente.direccion}"
+								validatorMessage="LA DIRECCION ES OBLIGATORIA (5 A 100 LETRAS)"
+								style="width:90%;">
+								<f:validateRegex pattern="[A-Za-záéíóúñÑ0-9.,/\\- ]{5,500}" />
+							</p:inputText>
+
+							<p:inputTextarea id="referencia" placeholder="REFERENCIA" styleClass="TexAlCenter"
+								value="#{clienteBean.cliente.referencia}"
+								style="width:90%;" />
+
+							<p:commandButton value="#{msg['btn.guardar']}"
+								actionListener="#{clienteBean.insertar}" update="mensajes"
+								style="min-width:200px; width:220px;" />
+
+							<p:commandButton value="#{msg['btn.cancelar']}"
+								actionListener="#{clienteBean.regresar}" process="@this"
+								style="min-width:200px; width:220px;" />
+
+						</p:panelGrid>
+
+					</h:form>
+
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>
